@@ -1,12 +1,11 @@
+import pandas as pd
+import streamlit as st
 import json
 import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
 import streamlit as st
 
 
 #COBA DISPLAY DATA NEGARA DULU YG BISA DI INPUT SEBELOM INPUT NAMA NEGARANYA
-
 f = open("kode_negara_lengkap.json")
 file_json = json.load(f)
 df_xsl = pd.read_excel(
@@ -28,23 +27,10 @@ change_country = []
 for x in list(df_csv['country_code']):
     if x not in list(df_json['alpha-3']):
         listbaru.append(x)
-print("")
-nama = input("Tulis Nama Kamu = ")
-print("")
-print("Welcome ", nama, " !!!")
-print("")
-print("INFORMASI DULU AJA NI YAA", nama.upper())
-print("")
-print("Di bawah ini merupakan kode negara yang dihapus karena tidak masuk kalkulasi")
-print(listbaru)
+
 #jumlah kode negara yg gadiperluin
-print("jumlah alpha-3 awal = ", len(df_csv))
 for x in listbaru:
     df_csv = df_csv[df_csv.country_code != x]
-print("jumlah alpha-3 sesudah dihilangkan = ", len(df_csv))
-print("jumlah alpha-3 yang dihilangkan = ", len(listbaru))
-print("")
-print("")
 
 inputan = st.text_input("Silahkan masukkan nama Negara yang ingin dicari = ")
 dfbaru=df_csv.loc[df_csv['country_code'] == inputan]
@@ -56,7 +42,6 @@ st.pyplot(grafik)
 # UNTUK NAMA NEGARA PAKE TOLERANSI HURUF BESAR HURUF KECIL SEMENTARA
 
 #B
-print("")
 st.text("Untuk Tahun mohon masukkan tahun yang ada pada data untuk menghindari error")
 T = int(st.text_input("Masukkan tahun produksi = ", key="T"))
 B = int(st.text_input("Masukkan banyak negara untuk ditampilkan = ", key="B"))
@@ -106,7 +91,6 @@ for x in range(len(df_json)):
         negara = list(df_json['name'])[x]
         region = list(df_json['region'])[x]
         subregion = list(df_json['sub-region'])[x]
-print("")
 st.markdown("Negara dengan total jumlah produksi terbesar pada tahun", T, "adalah dibawah ini ")
 st.text(negara)
 st.text(country_codes)
@@ -125,7 +109,6 @@ for x in range(len(df_json)):
         negara = list(df_json['name'])[x]
         region = list(df_json['region'])[x]
         subregion = list(df_json['sub-region'])[x]
-print("")
 st.markdown("Negara dengan jumlah produksi minyak terbesar secara keseluruhan adalah dibawah ini ")
 st.text(negara)
 st.text(country_codes)
@@ -149,7 +132,6 @@ for x in range(len(df_json)):
         region = list(df_json['region'])[x]
         subregion = list(df_json['sub-region'])[x]
 
-print("")
 st.markdown("Negara dengan total jumlah produksi terkecil pada tahun", T, "adalah dibawah ini ")
 st.text(negara)
 st.text(country_codes)
@@ -172,7 +154,6 @@ for x in range(len(df_json)):
         region = list(df_json['region'])[x]
         subregion = list(df_json['sub-region'])[x]
 
-print("")
 st.markdown("Negara dengan jumlah produksi minyak terkecil secara keseluruhan adalah dibawah ini ")
 st.text(negara)
 st.text(country_codes)
@@ -204,7 +185,6 @@ for x in range (len(dftotalnol)):
             totalnegaranol.append(list(df_json['name'])[y])
             totalregionol.append(list(df_json['region'])[y])
             totalsubregionol.append(list(df_json['sub-region'])[y])
-print("")
 st.dataframe(dfnol)
 st.table(dftotalnol)
 
