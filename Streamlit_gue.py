@@ -10,7 +10,7 @@ import streamlit as st
 f = open("kode_negara_lengkap.json")
 file_json = json.load(f)
 df_xsl = pd.read_excel(
-    "Droduksiminyakmentah.xlsx")
+    "produksiminyakmentah.xlsx")
 df_csv = pd.read_csv(
     "produksi_minyak_mentah.csv")
 df_json = pd.DataFrame.from_dict(file_json, orient='columns')
