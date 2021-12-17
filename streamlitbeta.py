@@ -21,7 +21,7 @@ df_csv['country_code'] = df_xsl['country_code']
 df_csv['Year'] = df_xsl['Year']
 df_csv['Production'] = df_xsl['Production']
 
-listnih= list[""]
+listnih= []
 listbaru = []
 listnih2 = []
 change_country = []
