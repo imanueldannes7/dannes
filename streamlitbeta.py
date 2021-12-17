@@ -25,8 +25,8 @@ listnih= []
 listbaru = []
 listnih2 = []
 change_country = []
-for x in listnih(df_csv['country_code']):
-    if x not in listnih(df_json['alpha-3']):
+for x in list(df_csv['country_code']):
+    if x not in list(df_json['alpha-3']):
         listbaru.append(x)
 print("")
 nama = input("Tulis Nama Kamu = ")
