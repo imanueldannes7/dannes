@@ -7,12 +7,12 @@ import streamlit as st
 
 #COBA DISPLAY DATA NEGARA DULU YG BISA DI INPUT SEBELOM INPUT NAMA NEGARANYA
 
-f = open("D:\\COOLYEAH\\Prokom\\UAS\\kode_negara_lengkap.json")
+f = open("kode_negara_lengkap.json")
 file_json = json.load(f)
 df_xsl = pd.read_excel(
-    "D:\\COOLYEAH\\Prokom\\UAS\\produksiminyakmentah.xlsx")
+    "produksiminyakmentah.xlsx")
 df_csv = pd.read_csv(
-    "D:\\COOLYEAH\\Prokom\\produksi_minyak_mentah.csv")
+    "produksi_minyak_mentah.csv")
 df_json = pd.DataFrame.from_dict(file_json, orient='columns')
 df_xsl['country_code'] = df_csv['kode_negara']
 df_xsl['Year'] = df_csv['tahun']
