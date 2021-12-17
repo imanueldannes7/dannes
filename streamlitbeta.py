@@ -4,20 +4,28 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
+
 #COBA DISPLAY DATA NEGARA DULU YG BISA DI INPUT SEBELOM INPUT NAMA NEGARANYA
 
 f = open("D:\\COOLYEAH\\Prokom\\UAS\\kode_negara_lengkap.json")
 file_json = json.load(f)
 df_xsl = pd.read_excel(
     "D:\\COOLYEAH\\Prokom\\UAS\\produksiminyakmentah.xlsx")
+df_csv = pd.read_csv(
+    "D:\\COOLYEAH\\Prokom\\produksi_minyak_mentah.csv")
 df_json = pd.DataFrame.from_dict(file_json, orient='columns')
-
+df_xsl['country_code'] = df_csv['kode_negara']
+df_xsl['Year'] = df_csv['tahun']
+df_xsl['Production'] = df_csv['produksi']
+df_csv['country_code'] = df_xsl['country_code']
+df_csv['Year'] = df_xsl['Year']
+df_csv['Production'] = df_xsl['Production']
 
 listnih= list[""]
 listbaru = []
 listnih2 = []
 change_country = []
-for x in listnih(df_xsl['country_code']):
+for x in listnih(df_csv['country_code']):
     if x not in listnih(df_json['alpha-3']):
         listbaru.append(x)
 print("")
@@ -30,16 +38,16 @@ print("")
 print("Di bawah ini merupakan kode negara yang dihapus karena tidak masuk kalkulasi")
 print(listbaru)
 #jumlah kode negara yg gadiperluin
-print("jumlah alpha-3 awal = ", len(df_xsl))
+print("jumlah alpha-3 awal = ", len(df_csv))
 for x in listbaru:
-    df_xsl = df_xsl[df_xsl.country_code != x]
-print("jumlah alpha-3 sesudah dihilangkan = ", len(df_xsl))
+    df_csv = df_csv[df_csv.country_code != x]
+print("jumlah alpha-3 sesudah dihilangkan = ", len(df_csv))
 print("jumlah alpha-3 yang dihilangkan = ", len(listbaru))
 print("")
 print("")
 
 inputan = st.text_input("Silahkan masukkan nama Negara yang ingin dicari = ")
-dfbaru=df_xsl.loc[df_xsl['country_code'] == inputan]
+dfbaru=df_csv.loc[df_csv['country_code'] == inputan]
 
 #Pemunculan Grafik
 grafik = plt.show()
@@ -48,16 +56,12 @@ st.pyplot(grafik)
 # UNTUK NAMA NEGARA PAKE TOLERANSI HURUF BESAR HURUF KECIL SEMENTARA
 
 #B
-tahun=[]
-for x in list(df_xsl['Year']):
-    if x not in tahun:
-        tahun.append(x)
 print("")
 st.text("Untuk Tahun mohon masukkan tahun yang ada pada data untuk menghindari error")
-T = int(st.selectbox("Masukkan tahun produksi = ", tahun))
+T = int(st.text_input("Masukkan tahun produksi = ", key="T"))
 B = int(st.text_input("Masukkan banyak negara untuk ditampilkan = ", key="B"))
 
-df1 = df_xsl.loc[df_xsl['Year'] == T]
+df1 = df_csv.loc[df_csv['Year'] == T]
 df1 = df1.sort_values(by=['Production'], ascending=False)
 dfm = df1[:B]
 
@@ -73,14 +77,14 @@ st_pyplot(grafik1)
 jumlah = []
 
 B2 = int(st.text_input("Masukkan banyak negara untuk ditampilkan jumlah kumulatifnya = ", key="B2"))
-for x in list(df_xsl['country_code']):
+for x in list(df_csv['country_code']):
     if x in listnih2:
         continue
     if x not in listnih2:
         listnih2.append(x)
 
 for x in listnih2 :
-    i = df_xsl.loc[df_xsl['country_code'] == x , 'Production'].sum()
+    i = df_csv.loc[df_csv['country_code'] == x , 'Production'].sum()
     jumlah.append(i)
 
 df2 =pd.DataFrame(list(zip(listnih2,jumlah)), columns=['country_code','jumlah'])
